@@ -1,3 +1,5 @@
+extern "C" {
+
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <util/twi.h>
@@ -137,4 +139,5 @@ ISR(TWI_vect) {
     twi_done();
     break;
   }
+}
 }
