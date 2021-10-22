@@ -1,11 +1,11 @@
-extern "C" {
-
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <util/twi.h>
 #include <string.h>
 
 #include "twi.h"
+
+#define F_CPU   1000000
 
 static volatile uint8_t busy;
 static struct {
@@ -16,7 +16,7 @@ static struct {
 } transmission;
 
 void twi_init() {
-  TWBR = ((F_CPU / TWI_FREQ) - 16) / 2;
+  TWBR = (unsigned char)((long unsigned)(F_CPU / TWI_FREQ) - 16) / 2;
   TWSR = 0; // prescaler = 1
 
   busy = 0;
@@ -139,5 +139,4 @@ ISR(TWI_vect) {
     twi_done();
     break;
   }
-}
 }
